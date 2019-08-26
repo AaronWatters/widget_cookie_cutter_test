@@ -8,9 +8,13 @@ Installation
 
 To install use pip:
 
-    $ pip install widget_cookie_cutter_test
+    $ pip install git+https://github.com/aaronwatters/widget_cookie_cutter_test
     $ jupyter nbextension enable --py --sys-prefix widget_cookie_cutter_test
 
+
+To install for jupyterlab
+
+    $ jupyter labextension install widget_cookie_cutter_test
 
 For a development installation (requires npm),
 
