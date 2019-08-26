@@ -1,0 +1,2 @@
+recursive-include widget_cookie_cutter_test/static *.*
+include widget_cookie_cutter_test.json
