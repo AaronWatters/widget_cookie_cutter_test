@@ -23,8 +23,8 @@ var HelloModel = widgets.DOMWidgetModel.extend({
         _view_name : 'HelloView',
         _model_module : 'widget_cookie_cutter_test',
         _view_module : 'widget_cookie_cutter_test',
-        _model_module_version : '0.1.0',
-        _view_module_version : '0.1.0',
+        _model_module_version : '0.1.1',
+        _view_module_version : '0.1.1',
         value : 'Hello World!'
     })
 });

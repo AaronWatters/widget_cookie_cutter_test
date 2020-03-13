@@ -8,6 +8,6 @@ class HelloWorld(widgets.DOMWidget):
     _model_name = Unicode('HelloModel').tag(sync=True)
     _view_module = Unicode('widget_cookie_cutter_test').tag(sync=True)
     _model_module = Unicode('widget_cookie_cutter_test').tag(sync=True)
-    _view_module_version = Unicode('^0.1.0').tag(sync=True)
-    _model_module_version = Unicode('^0.1.0').tag(sync=True)
+    _view_module_version = Unicode('^0.1.1').tag(sync=True)
+    _model_module_version = Unicode('^0.1.1').tag(sync=True)
     value = Unicode('Hello World!').tag(sync=True)
