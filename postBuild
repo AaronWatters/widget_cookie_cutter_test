@@ -1,5 +1,7 @@
 #!/bin/bash
-pip install -e .
+
+# don't reinstall?
+# pip install -e .
 
 jupyter nbextension install --py --symlink --sys-prefix widget_cookie_cutter_test
 jupyter nbextension enable --py --sys-prefix widget_cookie_cutter_test
