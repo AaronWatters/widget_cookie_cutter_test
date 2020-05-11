@@ -1,6 +1,8 @@
 widget_cookie_cutter_test
 ===============================
 
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/AaronWatters/widget_cookie_cutter_test/master)
+
 Test of widget cookie cutter for custom Jupyter widgets
 
 Installation
@@ -10,7 +12,6 @@ To install use pip:
 
     $ pip install git+https://github.com/aaronwatters/widget_cookie_cutter_test
     $ jupyter nbextension enable --py --sys-prefix widget_cookie_cutter_test
-
 
 To install for jupyterlab
 
@@ -23,3 +24,6 @@ For a development installation (requires npm),
     $ pip install -e .
     $ jupyter nbextension install --py --symlink --sys-prefix widget_cookie_cutter_test
     $ jupyter nbextension enable --py --sys-prefix widget_cookie_cutter_test
+
+<a href="https://mybinder.org/v2/gh/AaronWatters/widget_cookie_cutter_test/master?urlpath=lab/tree/test/test.ipynb)">
+Try it in Jupyterlab</a>
