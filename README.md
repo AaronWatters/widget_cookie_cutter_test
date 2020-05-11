@@ -25,5 +25,5 @@ For a development installation (requires npm),
     $ jupyter nbextension install --py --symlink --sys-prefix widget_cookie_cutter_test
     $ jupyter nbextension enable --py --sys-prefix widget_cookie_cutter_test
 
-<a href="https://mybinder.org/v2/gh/AaronWatters/widget_cookie_cutter_test/master?urlpath=lab/tree/test.ipynb)">
+<a href="https://mybinder.org/v2/gh/AaronWatters/widget_cookie_cutter_test/master?urlpath=lab/tree/test.ipynb">
 Try it in Jupyterlab</a>
