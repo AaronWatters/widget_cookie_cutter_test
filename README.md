@@ -29,3 +29,4 @@ For a development installation (requires npm),
 
 <a href="https://mybinder.org/v2/gh/AaronWatters/widget_cookie_cutter_test/master?urlpath=lab/tree/test.ipynb">
 Try it in Jupyterlab</a>
+
