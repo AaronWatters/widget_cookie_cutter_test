@@ -1,7 +1,7 @@
 sudo: false
 language: node_js
 python:
-- "3.6"
+- "3.4"
 node_js:
 - '10'
 branches:
@@ -11,6 +11,7 @@ cache:
   directories:
   - node_modules
 before_install:
+- python --version
 - sudo apt-get update
 - sudo apt-get install python3
 - python -m pip install jupyterlab
