@@ -3,6 +3,8 @@ widget_cookie_cutter_test
 
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/AaronWatters/widget_cookie_cutter_test/master?filepath=test.ipynb)
 
+[![Build Status](https://travis-ci.org/AaronWatters/widget_cookie_cutter_test.svg?branch=master)](https://travis-ci.org/AaronWatters/widget_cookie_cutter_test)
+
 Test of widget cookie cutter for custom Jupyter widgets
 
 Installation
