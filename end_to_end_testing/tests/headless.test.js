@@ -106,6 +106,8 @@ describe("headless browser tests", async () => {
         }
         console.log("Verify that test_string appears in widget output")
         await wait_until_there(page, container_selector, test_string);
+        // debug::
+        await substring_exists(page, container_selector, "xyz not there for debug only xyz")
         // success!
         expect(true).toBeTruthy();
     },
