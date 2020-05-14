@@ -103,8 +103,12 @@ describe("headless browser tests", async () => {
             // XXXX for reasons I don't understand I had to use an alternate find_and_click implementation here to avoid sporadic failures.
             await find_and_click2(page, confirm_selector, true);
         }
+        var import_response = await page.evaluate(() => document.querySelectorAll("div .output")[1].innerHTML);
+        expect(import_response).toBe("");
+        console.log("OUTPUT BEFORE:: " + await page.evaluate(() => document.querySelectorAll("div .output")[2].innerHTML));
         console.log('... wait for widget output to appear.')
         await page.waitForSelector(widget_selector);
+        console.log("OUTPUT AFTER:: " + await page.evaluate(() => document.querySelectorAll("div .output")[2].innerHTML));
         console.log("Verify that test_string is in widget output")
         const test_after = await substring_exists(page, widget_selector, test_string);
         expect(test_after).toBeTruthy();
