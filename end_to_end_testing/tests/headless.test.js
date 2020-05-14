@@ -161,10 +161,10 @@ describe("headless browser tests", async () => {
             }
         }
         // debugging...
-        if (!text_found) {
-            console.log("   NOT FOUND");
-            console.log(texts[0]);
-        }
+        //if (!text_found) {
+        //    console.log("   NOT FOUND");
+        //    console.log(texts[0]);
+        //}
         return text_found;
     }
 
