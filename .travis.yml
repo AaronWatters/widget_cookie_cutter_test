@@ -1,6 +1,4 @@
-language: python
-python:
-  - 3.6
+language: node
 node_js:
 - '10'
 branches:
@@ -15,8 +13,8 @@ before_install:
 - conda update -q conda
 # Useful for debugging any issues with conda
 - conda info -a
-- deps='pip numpy pandas scikit-learn coverage nose matplotlib'
-- conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION $deps
+- deps='pip coverage nose'
+- conda create -q -n test-environment $deps
 - source activate test-environment
 - conda install -c conda-forge nodejs
 - npm update
