@@ -85,7 +85,7 @@ describe("headless browser tests", async () => {
         console.log("  confirm restart and clear...")
         await find_and_click(page, confirm_selector, true);
         console.log("   sleep to allow events to clear... (???)")
-        sleep(2000);
+        await sleep(200);
         console.log("   verify the test text is not found");
         const test_string = "THIS IS THE SECRET TEST STRING";
         const test_before = await substring_exists(page, widget_selector, test_string);
@@ -93,7 +93,7 @@ describe("headless browser tests", async () => {
         console.log("  restart and run all...");
         await find_and_click(page, "#restart_run_all a");
         console.log("   sleep to allow events to clear... (???)")
-        sleep(2000);
+        await sleep(200);
         // for some reason the confirm dialog doesn't always appear... check whether it is there.
         var needs_confirmation = await page.evaluate(
             (selector) => !!document.querySelector(selector), 
