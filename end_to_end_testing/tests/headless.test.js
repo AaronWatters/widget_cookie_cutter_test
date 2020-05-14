@@ -154,6 +154,11 @@ describe("headless browser tests", async () => {
                 console.log("   found " + substring + " at index " + i);
             }
         }
+        // debugging...
+        if (!text_found) {
+            console.log("   NOT FOUND");
+            console.log(texts[0]);
+        }
         return text_found;
     }
 
