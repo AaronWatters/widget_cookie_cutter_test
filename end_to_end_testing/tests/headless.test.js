@@ -75,23 +75,24 @@ describe("headless browser tests", async () => {
         const path = "notebooks/notebook_tests/example.ipynb";
         const confirm_selector = "div.modal-dialog button.btn-danger";
         const widget_selector = ".p-Widget";
+        const container_selector = "#notebook-container";
+        const restart_clear_selector = "#restart_clear_output a";
+        const restart_run_selector = "#restart_run_all a";
+        const test_string = "THIS IS THE SECRET TEST STRING";
+        const initial_string = "here it is:";
         const page = await jupyter_live_page(path);
-        const url = jupyter_start_url();
         console.log("wait for the page to initialize...")
-        var title = await page.title();
-        console.log("example.ipynb page title is: " + title);
+        await wait_until_there(page, container_selector, initial_string);
         console.log("  restart and clear...")
-        await find_and_click(page, "#restart_clear_output a");
+        await find_and_click2(page, restart_clear_selector);
         console.log("  confirm restart and clear...")
-        await find_and_click(page, confirm_selector, true);
+        await find_and_click2(page, confirm_selector, true);
         console.log("   sleep to allow events to clear... (???)")
         await sleep(200);
-        console.log("   verify the test text is not found");
-        const test_string = "THIS IS THE SECRET TEST STRING";
-        const test_before = await substring_exists(page, widget_selector, test_string);
-        expect(test_before).toBeFalsy();
+        console.log("   verify the test text is not found or vanishes");
+        await wait_until_gone(page, container_selector, test_string);
         console.log("  restart and run all...");
-        await find_and_click(page, "#restart_run_all a");
+        await find_and_click2(page, restart_run_selector);
         console.log("   sleep to allow events to clear... (???)")
         await sleep(200);
         // for some reason the confirm dialog doesn't always appear... check whether it is there.
@@ -103,20 +104,60 @@ describe("headless browser tests", async () => {
             // XXXX for reasons I don't understand I had to use an alternate find_and_click implementation here to avoid sporadic failures.
             await find_and_click2(page, confirm_selector, true);
         }
-        var import_response = await page.evaluate(() => document.querySelectorAll("div .output")[1].innerHTML);
-        expect(import_response).toBe("");
-        console.log("OUTPUT BEFORE:: " + await page.evaluate(() => document.querySelectorAll("div .output")[2].innerHTML));
-        console.log('... wait for widget output to appear.')
-        await page.waitForSelector(widget_selector);
-        console.log("OUTPUT AFTER:: " + await page.evaluate(() => document.querySelectorAll("div .output")[2].innerHTML));
-        console.log("Verify that test_string is in widget output")
-        const test_after = await substring_exists(page, widget_selector, test_string);
-        expect(test_after).toBeTruthy();
+        console.log("Verify that test_string appears in widget output")
+        await wait_until_there(page, container_selector, test_string);
+        // success!
+        expect(true).toBeTruthy();
     },
     120000, // timeout in 2 minutes...
     );
 
+    async function wait_until_there(page, selector, substring) {
+        // keep looking until timeout
+        var found = false;
+        while (!found) {
+            console.log("looking in " + selector + " for " + substring);
+            found = await substring_exists(page, selector, substring);
+            if (!found) {
+                await sleep(1000)
+            }
+        }
+    };
+
+    async function wait_until_gone(page, selector, substring) {
+        // keep looking until timeout
+        var found = true;
+        while (found) {
+            console.log("looking in " + selector + " for absense of " + substring);
+            found = await substring_exists(page, selector, substring);
+            if (found) {
+                await sleep(1000)
+            }
+        }
+    };
+
     async function substring_exists(page, selector, substring) {
+        var match_exists = await page.evaluate((selector) => !!document.querySelector(selector), selector);
+        if (!match_exists) {
+            console.log("no match for selector " + selector)
+            return false;  // no selector match, no text match
+        }
+        var texts = await page.$$eval(
+            selector,
+            (elements) => elements.map((el) => el.textContent),
+        );
+        text_found = false;
+        console.log("   looking for " + substring + " in " + texts.length);
+        for (var i=0; i<texts.length; i++) {
+            if (texts[i].includes(substring)) {
+                text_found = true;
+                console.log("   found " + substring + " at index " + i);
+            }
+        }
+        return text_found;
+    }
+
+    async function substring_exists2(page, selector, substring) {
         var match_exists = await page.evaluate((selector) => !!document.querySelector(selector), selector);
         if (!match_exists) {
             console.log("no match for selector " + selector)
@@ -147,33 +188,38 @@ describe("headless browser tests", async () => {
         }
     };
 
-    async function find_and_click2(page, selector, wait_to_disappear) {
+    async function find_and_click2(page, selector, wait_to_disappear, no_click) {
         // alternate implementation...
+        console.log("  in find_and_click2 page is " + page);
         var found = false;
         while (!found) {
             found = await page.evaluate(
-                async function(selector) {
+                async function(selector, no_click) {
                     console.log("looking for '" + selector + "' in " + document);
                     // document.querySelector("button.button-danger")
                     var element = document.querySelector(selector);
                     if (element) {
                         console.log("element found " + element);
-                        element.click();
-                        if (wait_to_disappear) {
-                            console.log("waiting for element to vanish: " + selector)
-                            await page.waitFor(
-                                (selector) => !document.querySelector(selector),
-                                selector);
+                        if (!no_click) {
+                            element.click();
                         }
                         return true;
                     }
                     return false;
                 },
-                selector
+                selector, no_click
             );
             if (!found) {
-                await sleep(250);
+                console.log("looking for " + selector);
+                //console.log("OUTPUT:: " + await page.evaluate(() => document.querySelectorAll("div .output")[2].innerHTML));
+                await sleep(2500);
             }
+        }
+        if (wait_to_disappear) {
+            console.log("waiting for element to vanish: " + selector)
+            await page.waitFor(
+                (selector) => !document.querySelector(selector),
+                selector);
         }
     }
 
