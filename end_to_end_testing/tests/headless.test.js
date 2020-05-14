@@ -76,9 +76,11 @@ describe("headless browser tests", async () => {
         const confirm_selector = "div.modal-dialog button.btn-danger";
         const widget_selector = ".p-Widget";
         const container_selector = "#notebook-container";
+        //const container_selector = "html";  // debug: whole page
         const restart_clear_selector = "#restart_clear_output a";
         const restart_run_selector = "#restart_run_all a";
         const test_string = "THIS IS THE SECRET TEST STRING";
+        const secret_label = "SECRET BUTTON LABEL";
         const initial_string = "here it is:";
         const page = await jupyter_live_page(path);
         console.log("wait for the page to initialize...")
@@ -104,6 +106,8 @@ describe("headless browser tests", async () => {
             // XXXX for reasons I don't understand I had to use an alternate find_and_click implementation here to avoid sporadic failures.
             await find_and_click2(page, confirm_selector, true);
         }
+        console.log("Verify that secret_label appears in widget output")
+        await wait_until_there(page, container_selector, secret_label);
         console.log("Verify that test_string appears in widget output")
         await wait_until_there(page, container_selector, test_string);
         // debug::
