@@ -241,6 +241,15 @@ describe("headless browser tests", async () => {
         // wait for the page to initialize...
         await page.goto(sub_url, {waitUntil: 'networkidle2'});
         await page.waitForFunction(async () => !!(document.title));
+        // https://stackoverflow.com/questions/47539043/how-to-get-all-console-messages-with-puppeteer-including-errors-csp-violations
+        page
+            .on('console', message =>
+                console.log(`${message.type().substr(0, 3).toUpperCase()} ${message.text()}`))
+            .on('pageerror', ({ message }) => console.log(message))
+            .on('response', response =>
+                console.log(`${response.status()} ${response.url()}`))
+            .on('requestfailed', request =>
+                console.log(`${request.failure().errorText} ${request.url()}`))
         return page;
     }
 
