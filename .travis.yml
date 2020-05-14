@@ -16,7 +16,7 @@ before_install:
 - deps='pip coverage nose'
 - conda create -q -n test-environment $deps
 - source activate test-environment
-- conda install -c conda-forge nodejs
+# - conda install -c conda-forge nodejs
 - npm update
 - conda install -c conda-forge jupyterlab=2.1.2
 - python -m pip install -e .
