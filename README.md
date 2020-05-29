@@ -5,7 +5,7 @@ widget_cookie_cutter_test
 
 [![Build Status](https://travis-ci.org/AaronWatters/widget_cookie_cutter_test.svg?branch=master)](https://travis-ci.org/AaronWatters/widget_cookie_cutter_test)
 
-Test of widget cookie cutter for custom Jupyter widgets
+Test of widget cookie cutter for custom Jupyter widgets with end to end tests
 
 Installation
 ------------
